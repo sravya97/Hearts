@@ -1,0 +1,55 @@
+<!-- templates/add_new.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Message</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to add a new input field for messages
+            function addInputField() {
+                // Create new input element for message
+                var messageInput = $('<textarea>', { name: 'messages', rows: '4', placeholder: 'Enter your message', required: true });
+
+                // Create new div element to contain message input
+                var inputContainer = $('<div>', { class: 'input-column' });
+
+                // Append message input to the container
+                inputContainer.append(messageInput);
+
+                // Get the form element
+                var form = $('#messageForm');
+
+                // Insert the new container before the last element in the form (Add Message(s) button)
+                form.children().last().before(inputContainer);
+            }
+
+            // Attach click event to the + button
+            $('#addInputBtn').click(function() {
+                addInputField();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Add New Message</h1>
+    <form method="post" action="{{ url_for('add_messages') }}" id="messageForm">
+        <!-- Initial input column for message -->
+        <div class="input-column">
+            <h2>Message</h2>
+            <textarea name="messages" rows="4" placeholder="Enter your message" required></textarea>
+        </div>
+        <br>
+        <!-- + Button to add more input fields -->
+        <button type="button" id="addInputBtn">+</button>
+        <br>
+        <!-- Add Message(s) button -->
+        <input type="submit" value="Add Message(s)">
+    </form>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>

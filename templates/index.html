@@ -1,0 +1,46 @@
+<!-- templates/display_messages.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Messages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing Script">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <!-- Button to get and display the latest message -->
+    <div class="container">
+        <button class="add-button" id="button" onclick="showMessage()">Open Your Heart</button>
+        <p id="message" style="display: none;"></p>
+    </div>
+        <script>
+        function showMessage() {
+            fetch('/get-latest-message')
+                .then(response => response.json())
+                .then(data => {
+                    showHeartAnimation(data.content);
+                })
+        }
+
+        function showHeartAnimation(message) {
+            var button = document.getElementById('button');
+            const messageContainer = document.getElementById('message');
+
+            messageContainer.innerHTML = `
+            <div class="center-div">${message.replace(";", '<br />')}</div>
+            <div class="center-div">
+                <svg class="heart" viewBox="0 0 32 29.6">
+                    <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	                c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+                </svg>
+            </div>
+        </div>`;
+            button.style.display = 'none';
+            messageContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

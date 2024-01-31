@@ -81,6 +81,3 @@ scheduler.start()
 if latest_message['message_id'] is None:
     refresh_message()
 
-
-if __name__ == '__main__':
-    app.run(debug=False, port=5000)
